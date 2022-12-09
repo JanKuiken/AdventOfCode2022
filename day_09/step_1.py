@@ -1,7 +1,5 @@
 
 from collections import namedtuple
-from copy import copy, deepcopy
-import matplotlib.pyplot as plt
 
 Move = namedtuple('Move', ['dir', 'n'])
 Pos = namedtuple('Pos', ['x', 'y'])
