@@ -1,6 +1,4 @@
 
-# NumPy would be useful for this one, but let's try without for now
-
 # read forest from input
 with open('input.txt') as f:
     lines = f.readlines()
@@ -80,19 +78,30 @@ print('visible from the outside :', str(n_visible))
 
 print('---- part 2 ----')
 
-def distance_to_last_tree_that_can_been_seen(row, col, dir_row, dir_col):
+def distance_to_last_tree_that_can_been_seen(row, col, d_row, d_col):
     distance = 0
     own_height = forest[row][col]
-    max_height = -1;
-    ridiculous_number = n_rows + ncols + 9999999 
-    for step in range(1, ridiculous_number):  
-        pass
+    for step in range(1, max([n_rows, n_cols])):  
+        t_row = row + d_row * step
+        t_col = col + d_col * step
+        if t_row < 0 or t_row >= n_rows or t_col < 0 or t_col >= n_cols:
+            return distance
+        distance += 1
+        if forest[t_row][t_col] >= own_height:
+            return distance
 
-# we do not consider the borders.. and start with 1 and end with n_...-1
-for row in range(1, n_rows-1):
-    for col in range(1, n_cols-1):
-        pass        
-
+max_scenic_score = 0
+for row in range(1, n_rows):
+    for col in range(1, n_cols):
+        scenic_score = \
+              distance_to_last_tree_that_can_been_seen(row, col,  1,  0) \
+            * distance_to_last_tree_that_can_been_seen(row, col, -1,  0) \
+            * distance_to_last_tree_that_can_been_seen(row, col,  0,  1) \
+            * distance_to_last_tree_that_can_been_seen(row, col,  0, -1)
+        #print(row, col, scenic_score)
+        if scenic_score > max_scenic_score:
+            max_scenic_score = scenic_score
+print('max_scenic_score : ', str(max_scenic_score))
 
 
 # some visual checks
@@ -102,7 +111,7 @@ def print_forest():
         for tree in row:
             print(tree, end='')
         print()
-print_forest()
+# print_forest()
 
 def print_boolean_forest(boolean_forest):
     print('== boolean forest ==')
@@ -110,6 +119,6 @@ def print_boolean_forest(boolean_forest):
         for visible in row:
             print('#' if visible else '.', end='')
         print()
-print_boolean_forest(visible)
+# print_boolean_forest(visible)
 
 
