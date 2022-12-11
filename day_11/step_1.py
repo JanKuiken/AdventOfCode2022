@@ -1,6 +1,6 @@
 
 # there are 8 monkeys in the input file, we're not going to parse the file, we
-# copy/pste in in here and convert it to code...
+# copy/paste it in here and convert it to code...
 
 from dataclasses import dataclass
 from typing import Callable
@@ -88,8 +88,6 @@ monkeys.append(Monkey(
     inspections  = 0,
 ))
 
-# oke, let's hope i typed all this correctly...
-
 # let's go
 for r in range(20):
     for m, monkey in enumerate(monkeys):
@@ -99,53 +97,15 @@ for r in range(20):
             worry_level = monkey.operation(worry_level_item)
             worry_level = round(worry_level // 3)  # relax it a bit
             test        = monkey.test(worry_level)
-            # throw it:
+            # throw item to another monkey:
             monkeys[monkey.true_monkey if test else monkey.false_monkey].items.append(worry_level)
             # some admin
             monkey.inspections += 1
-            # some debug console output
-            print( str(r), str(m), str(worry_level_item), str(worry_level),
-                   str(test), str(monkey.true_monkey if test else monkey.false_monkey),
-                   str(monkey.inspections))   
 
-# That caused, some trouble, i started out with a namedtuple, but had to change it
-# to a dataclass because a tuple cannot be changed (oh oh oh oh....)
-# Than i had to google how to add a lambda to a data class
-
-# any find the AOC answer and submit it...
-n_of_inspections = []
-for monkey in monkeys:
-    n_of_inspections.append(monkey.inspections)
+n_of_inspections = [monkey.inspections for monkey in monkeys]
 n_of_inspections.sort()
-print(n_of_inspections)
+
 monkey_business = n_of_inspections[-1] * n_of_inspections[-2]
+print('---- part 1 ----')
 print(monkey_business)
-
-# i submitted 124605, it was wrong, too high, hmm start debugging....
-# (start with test data? check definitions?....)
-
-# oke checked the example data, and discovered that i should change
-#   worry_level = round(worry_level / 3)  # relax it a bit
-# to
-#   worry_level = round(worry_level // 3)  # relax it a bit
-# 
-# i submitted the new answer 118674, and it was correct...
-# i'm still not shure:
-#
-#    In [7]: round (3 / 2)
-#    Out[7]: 2
-#    
-#    In [8]: round (3 // 2)
-#    Out[8]: 1
-#
-# Oke 'close reading' did it, from the problem definition:
-#
-#  'divided by three and rounded down to the nearest integer'
-#
-# up to part 2
-
-
-
-
-
 
