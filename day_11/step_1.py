@@ -89,23 +89,24 @@ monkeys.append(Monkey(
 ))
 
 # let's go
-for r in range(20):
-    for m, monkey in enumerate(monkeys):
-        while len(monkey.items):
+for _ in range(20): # the monkeys will play 20 rounds...
+    for monkey in monkeys:
+        while monkey.items:
         
             worry_level_item = monkey.items.pop()
-            worry_level = monkey.operation(worry_level_item)
-            worry_level = round(worry_level // 3)  # relax it a bit
+            worry_level = monkey.operation(worry_level_item)  # increase it...
+            worry_level = round(worry_level // 3)             # relax it a bit
             test        = monkey.test(worry_level)
             # throw item to another monkey:
             monkeys[monkey.true_monkey if test else monkey.false_monkey].items.append(worry_level)
             # some admin
             monkey.inspections += 1
 
+# aquire desired answer
 n_of_inspections = [monkey.inspections for monkey in monkeys]
 n_of_inspections.sort()
-
 monkey_business = n_of_inspections[-1] * n_of_inspections[-2]
+
 print('---- part 1 ----')
 print(monkey_business)
 
