@@ -97,7 +97,7 @@ for r in range(20):
         
             worry_level_item = monkey.items.pop()
             worry_level = monkey.operation(worry_level_item)
-            worry_level = round(worry_level / 3)  # relax it a bit
+            worry_level = round(worry_level // 3)  # relax it a bit
             test        = monkey.test(worry_level)
             # throw it:
             monkeys[monkey.true_monkey if test else monkey.false_monkey].items.append(worry_level)
@@ -124,7 +124,25 @@ print(monkey_business)
 # i submitted 124605, it was wrong, too high, hmm start debugging....
 # (start with test data? check definitions?....)
 
-
+# oke checked the example data, and discovered that i should change
+#   worry_level = round(worry_level / 3)  # relax it a bit
+# to
+#   worry_level = round(worry_level // 3)  # relax it a bit
+# 
+# i submitted the new answer 118674, and it was correct...
+# i'm still not shure:
+#
+#    In [7]: round (3 / 2)
+#    Out[7]: 2
+#    
+#    In [8]: round (3 // 2)
+#    Out[8]: 1
+#
+# Oke 'close reading' did it, from the problem definition:
+#
+#  'divided by three and rounded down to the nearest integer'
+#
+# up to part 2
 
 
 
